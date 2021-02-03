@@ -169,8 +169,8 @@ void loop() {
 
     // Ahora el "ángulo de declinación", que es el "error" del campo magnetico en el área
     // Encuentra el tuyo aquí: http://www.magnetic-declination.com/
-    // El nuestro es +1° 32', o +0,0267617152 rad, utilizaremos 0,02676
-    float declinationAngle = 0,02676;
+    // El nuestro es +1° 21', o +0,0235619449 rad, utilizaremos 0,02356
+    float declinationAngle = 0,02356;
     heading += declinationAngle;
 
     // Correct for when signs are reversed.
