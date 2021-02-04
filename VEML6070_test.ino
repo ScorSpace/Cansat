@@ -1,18 +1,17 @@
-include <Wire.h>
-#include "Adafruit_VEML6070.h"
- 
-Adafruit_VEML6070 uv = Adafruit_VEML6070();
- 
+int pinUV = A0;
+int ValorUV;
+
 void setup()
 {
-Serial.begin(9600);
-Serial.println("VEML6070 Test");
-uv.begin(VEML6070_1_T); // pasar la constante de tiempo de integración
+  pinMode(pinUV, INPUT);
+  Serial.begin(9600);
 }
  
 void loop()
 {
-Serial.print("Nivel de luz UV: ");
-Serial.println(uv.readUV());
-delay(1000);
+   ValorUV = analogRead(pinUV);
+  Serial.print("Nivel de UV: ");
+  Serial.print(ValorUV);
+  Serial.println(" nm");
+  delay(1000);
 }
