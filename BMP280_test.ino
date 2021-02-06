@@ -1,7 +1,7 @@
-/*****************************************************************************/
-//	Programa que muestra en monitor serie los valores de temperatura, presion
-//	atmosferica y altitud relativa del sensor BMP280 conectado mediante bus I2C.
-/*****************************************************************************/
+/*********************************************************************************************/
+//	Funcion: Programa que muestra en monitor serie los valores de temperatura, presion
+//	         atmosferica y altitud relativa del sensor BMP280 conectado mediante bus I2C.
+/*********************************************************************************************/
 
 #include <Wire.h>		// incluye libreria de bus I2C
 #include <Adafruit_Sensor.h>	// incluye librerias para sensor BMP280
