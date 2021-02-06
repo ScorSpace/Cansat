@@ -1,5 +1,5 @@
 /*****************************************************************************/
-//	Función:	 Obtener la dirección geográfica del eje X.
+//	Funcion:	 Obtener la direccion geografica del eje X.
 //				Norte = 0º
 //				Este = 90º
 //				Sur = 180º
@@ -7,12 +7,12 @@
 /*****************************************************************************/
 // Biblioteca I2C
 #include <Wire.h>
-// Biblioteca del compás
+// Biblioteca del compas
 #include <HMC5883L.h>
 
 //#include "Streaming.h"
 
-// Guardar compás como variable
+// Guardar compas como variable
 HMC5883L compass;
 // Grabar errores
 int error = 0;
@@ -20,7 +20,7 @@ int error = 0;
 MagnetometerScaled valueOffset;
 
 
-// Configuración del microcontrolador y compás
+// Configuracion del microcontrolador y compas
 void setup() {
     // Serial Port
     Serial.begin(115200);
@@ -45,7 +45,7 @@ void setup() {
     compassCalibrate();
 }
 
-// calibrar la compensación de x, y, z
+// calibrar la compensacion de x, y, z
 void compassCalibrate(void) {
     //Serial << ">>>> calibrar el compás\n";
     Serial.println("calibrar el compás");
@@ -149,9 +149,9 @@ void compassCalibrate(void) {
 }
 
 void loop() {
-    // Leer los datos del compás (no a escala)
+    // Leer los datos del compas (no a escala)
     MagnetometerRaw raw = compass.readRawAxis();
-    // Leer los datos del compás a escala
+    // Leer los datos del compas a escala
     MagnetometerScaled scaled = compass.readScaledAxis();
 
     scaled.XAxis -= valueOffset.XAxis;
@@ -161,13 +161,13 @@ void loop() {
     // Se accede a los datos de esta manera:
     int MilliGauss_OnThe_XAxis = scaled.XAxis;// (or YAxis, or ZAxis)
 
-    // Calcular el ángulo cuando el magnetómetro esté nivelado
+    // Calcular el angulo cuando el magnetometro este nivelado
     float yxHeading = atan2(scaled.YAxis, scaled.XAxis);
     float zxHeading = atan2(scaled.ZAxis, scaled.XAxis);
 
     float heading = yxHeading;
 
-    // Ahora el "ángulo de declinación", que es el "error" del campo magnetico en el área
+    // Ahora el "angulo de declinacion", que es el "error" del campo magnetico en el area
     // Encuentra el tuyo aquí: http://www.magnetic-declination.com/
     // El nuestro es +1° 21', o +0,0235619449 rad, utilizaremos 0,02356
     float declinationAngle = 0,02356;
