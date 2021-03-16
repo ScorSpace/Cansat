@@ -1,6 +1,8 @@
 int pinUV = A0;
 int ValorUV;
 
+// NOTA: Mirar tabla de indices en el canal sensor-guva-s12sd en discord
+
 void setup()
 {
   pinMode(pinUV, INPUT);
@@ -10,8 +12,7 @@ void setup()
 void loop()
 {
    ValorUV = analogRead(pinUV);
-  Serial.print("Nivel de UV: ");
-  Serial.print(ValorUV);
-  Serial.println(" nm");
+  Serial.print("Índice de UV: ");
+  Serial.println(ValorUV);
   delay(1000);
 }
