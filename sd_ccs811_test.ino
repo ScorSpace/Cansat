@@ -1,6 +1,6 @@
 /******************************************************************************************************/
 // Funcion:   Mediante un modulo lector de memoria MicroSD conectado mediante interfaz SPI
-//           crearemos un archivo de texto de prueba y grabaremos una linea en el mismo, 
+//           crearemos un archivo de texto ccs811.txt y grabaremos en ese archivo lo que reciba el sensor, 
 //           luego haremos la apertura para su lectura y asi verificar el correcto funcionamiemto.
 /******************************************************************************************************/
 
