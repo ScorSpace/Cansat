@@ -11,7 +11,7 @@ void setup()
  
 void loop()
 {
-   ValorUV = analogRead(pinUV);
+  ValorUV = analogRead(pinUV);
   Serial.print("Índice de UV: ");
   Serial.println(ValorUV);
   delay(1000);
