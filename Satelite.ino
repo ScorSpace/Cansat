@@ -14,6 +14,7 @@
 BME280 bme280;
 Adafruit_CCS811 ccs;
 const int buzzer = 7; // buzzer al pin digital I/O 7
+const int led = 6; // LED al pin digital I/O 6
 int pinUV = A0;
 int ValorUV;
 
@@ -31,7 +32,9 @@ void setup() {
 
   pinMode(buzzer, OUTPUT);
   tone(buzzer, 1000); // Enviar una señal de 1kHz de frecuencia
-
+  
+  pinMode(led, OUTPUT);
+  
   pinMode(pinUV, INPUT); // Preparar para leer del sensor GUVA-S12SD
   
   if(!bme280.init()){
@@ -58,32 +61,49 @@ void loop() {
   
   if (archivo) {
     float pressure;
-  
+
     //temperatura
-    archivo.print("Temperatura: ");
-    archivo.print(bme280.getTemperature());
-    archivo.println("C");
-        
+    Serial.println("Misión Primaria");
+    Serial.print("Temperatura: ");
+    Serial.print(bme280.getTemperature());
+    Serial.println("Cº");//The unit for  Celsius because original arduino don't support special symbols
+
     //presión atmosférica
-    archivo.print("Presion: ");
-    archivo.print(pressure = bme280.getPressure());
-    archivo.println("Pa");
-      
+    Serial.print("Presión: ");
+    Serial.print(pressure = bme280.getPressure());
+    Serial.println("Pa");
+
     //altitud
-    archivo.print("Altitud: ");
-    archivo.print(bme280.calcAltitude(pressure) + 75);
-    archivo.println("m");
-      
+    Serial.print("Altitud: ");
+    Serial.print(bme280.calcAltitude(pressure) + 110);
+    Serial.println("m");
+
     //humedad
-    archivo.print("Humedad: ");
-    archivo.print(bme280.getHumidity());
-    archivo.println("%");
-    Serial.println("Escribiendo en archivo sat.txt..."); // texto en monitor serie
-    archivo.close();        // cierre del archivo
-    Serial.println("Escritura correcta."); // texto de escritura correcta en monitor serie
-    } else {
-      Serial.println("Error en apertura de sat.txt");  // texto de falla en apertura de archivo
-    }
+    Serial.print("Humedad: ");
+    Serial.print(bme280.getHumidity());
+    Serial.println("%");
+
+    Serial.println(" ");
+    
+    //UV
+    ValorUV = analogRead(pinUV);
+    Serial.println("Misión Secundaria 1");
+    Serial.print("Índice de UV: ");
+    Serial.println(ValorUV);
+
+    Serial.println(" ");
+    
+    if(ccs.available()){
+      if(!ccs.readData()){
+        Serial.println("Misión Secundaria 2");
+        Serial.print("CO2: ");
+        Serial.print(ccs.geteCO2());
+        Serial.print("ppm, TVOC: ");
+        Serial.println(ccs.getTVOC());
+        Serial.println(" ");
+        Serial.println("--------------");
+      }
+
     
     archivo = SD.open("sat.txt");    // apertura de archivo sat.txt
     if (archivo) {
@@ -95,38 +115,16 @@ void loop() {
   } else {
     Serial.println("Error en la apertura de sat.txt");// texto de falla en apertura de archivo
   }
-  
-  if(ccs.available()){
-    if(!ccs.readData()){
-      archivo = SD.open("sat.txt", FILE_WRITE);  // apertura para lectura/escritura de archivo sat.txt
-        
-      if (archivo) {
-        archivo.print("CO2: ");
-        archivo.print(ccs.geteCO2());
-        archivo.print("ppm, TVOC: ");
-        archivo.println(ccs.getTVOC());
-        Serial.println("Escribiendo en archivo sat.txt..."); // texto en monitor serie
-        archivo.close();        // cierre del archivo
-        Serial.println("Escritura correcta."); // texto de escritura correcta en monitor serie
-      } else {
-        Serial.println("Error en apertura de sat.txt");  // texto de falla en apertura de archivo
-      }
-    
-      archivo = SD.open("sat.txt");    // apertura de archivo sat.txt
-      if (archivo) {
-        Serial.println("Contenido de sat.txt:"); // texto en monitor serie
-        while (archivo.available()) {   // mientras exista contenido en el archivo
-          Serial.write(archivo.read());     // lectura de a un caracter por vez
-        }
-        archivo.close();        // cierre de archivo
-      } else {
-        Serial.println("Error en la apertura de sat.txt");// texto de falla en apertura de archivo
-      }
-    }
-    else{
-      Serial.println("¡ERROR!");
-      while(1);
-    }
+      
+  archivo = SD.open("sat.txt");    // apertura de archivo sat.txt
+  if (archivo) {
+    Serial.println("Contenido de sat.txt:"); // texto en monitor serie
+    while (archivo.available()) {   // mientras exista contenido en el archivo
+    Serial.write(archivo.read());     // lectura de a un caracter por vez
+  }
+    archivo.close();        // cierre de archivo
+  } else {
+    Serial.println("Error en la apertura de sat.txt");// texto de falla en apertura de archivo
   }
   
   delay(500);
