@@ -116,17 +116,6 @@ void loop() {
   } else {
     Serial.println("Error en la apertura de sat.txt");// texto de falla en apertura de archivo
   }
-      
-  archivo = SD.open("sat.txt");    // apertura de archivo sat.txt
-  if (archivo) {
-    Serial.println("Contenido de sat.txt:"); // texto en monitor serie
-    while (archivo.available()) {   // mientras exista contenido en el archivo
-    Serial.write(archivo.read());     // lectura de un caracter por vez
-  }
-    archivo.close();        // cierre de archivo
-  } else {
-    Serial.println("Error en la apertura de sat.txt");// texto de falla en apertura de archivo
-  }
   
   delay(500);
 }
