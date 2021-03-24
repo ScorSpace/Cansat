@@ -53,51 +53,53 @@ void setup() {
 
 void loop() {
   
+  digitalWrite(led, HIGH) // Encender led
+  
   archivo = SD.open("sat.txt", FILE_WRITE);  // apertura para lectura/escritura de archivo sat.txt
   
   if (archivo) {
     float pressure;
 
     //temperatura
-    Serial.println("Misión Primaria");
-    Serial.print("Temperatura: ");
-    Serial.print(bme280.getTemperature());
-    Serial.println("Cº");//The unit for  Celsius because original arduino don't support special symbols
+    archivo.println("Misión Primaria");
+    archivo.print("Temperatura: ");
+    archivo.print(bme280.getTemperature());
+    archivo.println("Cº");//The unit for  Celsius because original arduino don't support special symbols
 
     //presión atmosférica
-    Serial.print("Presión: ");
-    Serial.print(pressure = bme280.getPressure());
-    Serial.println("Pa");
+    archivo.print("Presión: ");
+    archivo.print(pressure = bme280.getPressure());
+    archivo.println("Pa");
 
     //altitud
-    Serial.print("Altitud: ");
-    Serial.print(bme280.calcAltitude(pressure) + 110);
-    Serial.println("m");
+    archivo.print("Altitud: ");
+    archivo.print(bme280.calcAltitude(pressure) + 110);
+    archivo.println("m");
 
     //humedad
-    Serial.print("Humedad: ");
-    Serial.print(bme280.getHumidity());
-    Serial.println("%");
+    archivo.print("Humedad: ");
+    archivo.print(bme280.getHumidity());
+    archivo.println("%");
 
-    Serial.println(" ");
+    archivo.println(" ");
     
     //UV
     ValorUV = analogRead(pinUV);
-    Serial.println("Misión Secundaria 1");
-    Serial.print("Índice de UV: ");
-    Serial.println(ValorUV);
+    archivo.println("Misión Secundaria 1");
+    archivo.print("Índice de UV: ");
+    archivo.println(ValorUV);
 
-    Serial.println(" ");
+    archivo.println(" ");
     
     if(ccs.available()){
       if(!ccs.readData()){
-        Serial.println("Misión Secundaria 2");
-        Serial.print("CO2: ");
-        Serial.print(ccs.geteCO2());
-        Serial.print("ppm, TVOC: ");
-        Serial.println(ccs.getTVOC());
-        Serial.println(" ");
-        Serial.println("--------------");
+        archivo.println("Misión Secundaria 2");
+        archivo.print("CO2: ");
+        archivo.print(ccs.geteCO2());
+        archivo.print("ppm, TVOC: ");
+        archivo.println(ccs.getTVOC());
+        archivo.println(" ");
+        archivo.println("--------------");
       }
     }
     
