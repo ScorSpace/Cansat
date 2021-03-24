@@ -52,10 +52,6 @@ void setup() {
 }
 
 void loop() {
-
-  ValorUV = analogRead(pinUV);
-  Serial.print("Indice de UV: ");
-  Serial.println(ValorUV);
   
   archivo = SD.open("sat.txt", FILE_WRITE);  // apertura para lectura/escritura de archivo sat.txt
   
@@ -109,7 +105,7 @@ void loop() {
     if (archivo) {
       Serial.println("Contenido de sat.txt:"); // texto en monitor serie
       while (archivo.available()) {   // mientras exista contenido en el archivo
-        Serial.write(archivo.read());     // lectura de a un caracter por vez
+        Serial.write(archivo.read());     // lectura de un caracter por vez
       }
     }
     archivo.close();        // cierre de archivo
