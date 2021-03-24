@@ -103,13 +103,14 @@ void loop() {
         Serial.println(" ");
         Serial.println("--------------");
       }
-
+    }
     
     archivo = SD.open("sat.txt");    // apertura de archivo sat.txt
     if (archivo) {
       Serial.println("Contenido de sat.txt:"); // texto en monitor serie
       while (archivo.available()) {   // mientras exista contenido en el archivo
-      Serial.write(archivo.read());     // lectura de a un caracter por vez
+        Serial.write(archivo.read());     // lectura de a un caracter por vez
+      }
     }
     archivo.close();        // cierre de archivo
   } else {
