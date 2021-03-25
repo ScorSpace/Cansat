@@ -53,7 +53,7 @@ void setup() {
 
 void loop() {
   
-  digitalWrite(led, HIGH) // Encender led
+  digitalWrite(led, HIGH); // Encender led
   
   archivo = SD.open("sat.txt", FILE_WRITE);  // apertura para lectura/escritura de archivo sat.txt
   
