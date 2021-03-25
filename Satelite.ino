@@ -34,6 +34,7 @@ void setup() {
   tone(buzzer, 1000); // Enviar una señal de 1kHz de frecuencia
   
   pinMode(led, OUTPUT);
+  digitalWrite(led, HIGH); // Encender led
   
   pinMode(pinUV, INPUT); // Preparar para leer del sensor GUVA-S12SD
   
@@ -52,8 +53,6 @@ void setup() {
 }
 
 void loop() {
-  
-  digitalWrite(led, HIGH); // Encender led
   
   archivo = SD.open("sat.txt", FILE_WRITE);  // apertura para lectura/escritura de archivo sat.txt
   
@@ -90,28 +89,28 @@ void loop() {
     archivo.println(ValorUV);
 
     archivo.println(" ");
+
+    //CCS
+    archivo.println("Misión Secundaria 2");
+    archivo.print("CO2: ");
+    archivo.print(ccs.geteCO2());
+    archivo.print("ppm, TVOC: ");
+    archivo.println(ccs.getTVOC());
+    archivo.println(" ");
+    archivo.println("--------------");
     
-    if(ccs.available()){
-      if(!ccs.readData()){
-        archivo.println("Misión Secundaria 2");
-        archivo.print("CO2: ");
-        archivo.print(ccs.geteCO2());
-        archivo.print("ppm, TVOC: ");
-        archivo.println(ccs.getTVOC());
-        archivo.println(" ");
-        archivo.println("--------------");
-      }
+    archivo.close();
     }
     
-    archivo = SD.open("sat.txt");    // apertura de archivo sat.txt
-    if (archivo) {
-      Serial.println("Contenido de sat.txt:"); // texto en monitor serie
-      while (archivo.available()) {   // mientras exista contenido en el archivo
-        Serial.write(archivo.read());     // lectura de un caracter por vez
-      }
+  archivo = SD.open("sat.txt");    // apertura de archivo sat.txt
+  if (archivo) {
+    Serial.println("Contenido de sat.txt:"); // texto en monitor serie
+    while (archivo.available()) {   // mientras exista contenido en el archivo
+      Serial.write(archivo.read());     // lectura de un caracter por vez
     }
     archivo.close();        // cierre de archivo
-  } else {
+  }
+  else {
     Serial.println("Error en la apertura de sat.txt");// texto de falla en apertura de archivo
   }
   
